@@ -1,11 +1,11 @@
 import time
 
-print("|-------------------------------------------|")
-print("|                                           |")
-print("|       Seja bem vindo a Pythônica!!        |")
-print("|                                           |")
-print("|                                           |")
-print("|-------------------------------------------|")
+print("|----------------------------------------------------------------------------------|")
+print("|                                                                                  |")
+print("|                         Seja bem vindo a Pythônica!!                             |")
+print("|                                                                                  |")
+print("|                                                                                  |")
+print("|----------------------------------------------------------------------------------|")
 
 print("Para seguir na plataforma, informe o seu nome.")
 qtd_min_caracteres = int(3)## qtd minima de caracteres para o nome
@@ -33,7 +33,7 @@ validacao_contato =  False
 if nome == True:
     while tentativas_opcoes < 3:
         print(f"Olá {nome_usuario}, selecione uma das opcoes:")
-        print("[1] = Cadastrar novo contato\n[2] = Visualisar todos os contatos\n[3] = Sair")
+        print("[1] = Cadastrar novo contato\n[2] = Sair")
 
         try:
             opcoes = int(input("Opção:"))
@@ -41,11 +41,8 @@ if nome == True:
             if(opcoes == 1):
                 cadastrar_contatos = True
                 break
-                
-            elif(opcoes == 2):
-                print("Vizualizar todos os contatos")
 
-            elif(opcoes == 3):
+            elif(opcoes == 2):
                 time.sleep(0.80)
                 print("Saindo...") 
                 exit()
@@ -60,30 +57,98 @@ if nome == True:
             print(f"-------- Tentativa {tentativas_opcoes} de 3----------")
 
     if(cadastrar_contatos):
-        qtd_min_caracteres_contato = int(3)
-        nome_contato = input("Nome:")
-                
-        telefone_contato = int(input("Telefone:"))
-        email_contato = input("E-mail:")
+        tentativas_contatos = 0
+        qtd_de_contatos_cadastrados = 0
+        total_contatos = 2
+        contatos = []
 
-        if len(nome_contato) > qtd_min_caracteres_contato and nome_contato.isalpha(): # validação nome do contato se é > 3 e que seja apenas caracteres tipo texto
-            validacao_contato = True
-            print("Nome do contato esta correto")
+        while  qtd_de_contatos_cadastrados < total_contatos:
+            tentativas_contatos = 0 # Toda vez que ele completar um cadastro, zera o número de tentativas
 
-        else:
-            print("Informe um nome com mais de 3 caracteres")    
+            while tentativas_contatos < 3:
 
-        if(len(str(telefone_contato)) > 8 and len(str(telefone_contato)) < 15 ):#Verifico se o contato é entre 8 e 15
-            print("Passou no teste do contato")
+                qtd_min_caracteres_contato = int(3)
+            
+                nome_contato = input("Nome:")
 
-        else:
-            print("Informe um número de telefone correto")   
+                if len(nome_contato) > qtd_min_caracteres_contato and nome_contato.isalpha(): # validação nome do contato se é > 3 e que seja apenas caracteres tipo texto
+                    validacao_contato = True
+                    print("Passou")
+                    break
+                    
+                else:
+                    tentativas_contatos += 1
+                    print(f"Informe apenas caracteres do tipo texto --- Tentativa {tentativas_contatos} de 3") 
 
-        if("@" in email_contato and ".com" in email_contato):## Vejo se @ e .com estão no texto que o usuário digitou
-            print("e-mail válido")
+                if tentativas_contatos == 3:
+                    print("QTD de vezes atigingida")
+                    exit()
+                      
+            while tentativas_contatos < 3:
+     
+                    telefone_contato = input("Telefone:")
 
-        else:
-            print("E_mail inválido")
+                    if(len(telefone_contato) > 8 and len(telefone_contato) < 15  and  not telefone_contato.isalpha()):#Verifico se o contato é entre 8 e 15
+                        print("Passou no teste do contato")
+                        break
+
+                    else:
+                        tentativas_contatos += 1
+                        print(f"Informe apenas caracteres do tipo inteiro --- Tentativa {tentativas_contatos} de 3") 
+                        
+                    if tentativas_contatos == 3:
+                        print("QTD de vezes atigingida")
+                        exit()
+
+            while tentativas_contatos < 3:
+
+                email_contato = input("E-mail:")
+                if("@" in email_contato and ".com" in email_contato):## Vejo se @ e .com estão no texto que o usuário digitouelse:
+                    print("Passou")
+                    break
+
+                else:
+                    print("E-mail Inválido")   
+                    print(f" Tentativa {tentativas_contatos} de 3") 
+
+                if tentativas_contatos == 3:
+                    print("QTD de vezes atigingida")
+                    exit()
+      
+            contatos.append(f'{nome_contato}|{telefone_contato}|{email_contato}')
+            qtd_de_contatos_cadastrados += 1   
+            print(f"Contatos Cadastrados = {qtd_de_contatos_cadastrados}")
+
+            sair_sistema = input("Deseja sair do sistema? (Sim|Não)").strip().upper()
+            if(sair_sistema == "SIM"):
+                print("Contatos cadastrados:")
+                for contato in contatos:
+                    print(contato)
+                print("Saindo....")
+                time.sleep(0.80)
+                exit()
+
+            vizualizar_contatos = input("Deseja visualizar seus contatos? (Sim|Não): ").strip().upper()
+            if vizualizar_contatos == "SIM":
+                print("Contatos cadastrados:")
+                for contato in contatos:
+                    print(contato)            
+    
+            if qtd_de_contatos_cadastrados < total_contatos:
+                cadastrar_novo_contato = input("Deseja cadastrar outro contato? (Sim|Não): ").strip().upper()
+                if cadastrar_novo_contato != "SIM":
+                    break
+
+            if qtd_de_contatos_cadastrados == total_contatos:
+                print("Você já atingiu o limite máximo de contatos:")
+                print("Contatos cadastrados:")
+                for contato in contatos:
+                    print(contato)
+                exit()
+
+
+  
+
 
 
                 
