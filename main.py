@@ -1,5 +1,4 @@
 import time
-
 print("|----------------------------------------------------------------------------------|")
 print("|                                                                                  |")
 print("|                         Seja bem vindo a Pythônica!!                             |")
@@ -13,9 +12,9 @@ tentativas_nome = 1
 nome = False
 
 while True:
-    nome_usuario = input("Nome:")
-
-    if len(nome_usuario)> qtd_min_caracteres and nome_usuario.isalpha(): ##isalpha(verifica se todos os caracteres são letras)
+    nome_usuario = input("Nome:").strip()
+    print("-----------------------------------------")
+    if len(nome_usuario)> qtd_min_caracteres and nome_usuario.replace(" ", "").isalpha(): ##isalpha(verifica se todos os caracteres são letras)
         nome = True
         time.sleep(0.70)
         break
@@ -25,11 +24,9 @@ while True:
     else:
         print(f"Informe mais de 3 caracteres. Tentativa {tentativas_nome} de 3")
         tentativas_nome = tentativas_nome + 1  
-
 tentativas_opcoes = 0
 cadastrar_contatos = False
 validacao_contato =  False
-
 if nome == True:
     while tentativas_opcoes < 3:
         print(f"Olá {nome_usuario}, selecione uma das opcoes:")
@@ -37,6 +34,7 @@ if nome == True:
 
         try:
             opcoes = int(input("Opção:"))
+            print("-----------------------------------------")
 
             if(opcoes == 1):
                 cadastrar_contatos = True
@@ -66,14 +64,11 @@ if nome == True:
             tentativas_contatos = 0 # Toda vez que ele completar um cadastro, zera o número de tentativas
 
             while tentativas_contatos < 3:
-
                 qtd_min_caracteres_contato = int(3)
-            
                 nome_contato = input("Nome:")
 
                 if len(nome_contato) > qtd_min_caracteres_contato and nome_contato.isalpha(): # validação nome do contato se é > 3 e que seja apenas caracteres tipo texto
                     validacao_contato = True
-                    print("Passou")
                     break
                     
                 else:
@@ -85,11 +80,9 @@ if nome == True:
                     exit()
                       
             while tentativas_contatos < 3:
-     
                     telefone_contato = input("Telefone:")
 
                     if(len(telefone_contato) > 8 and len(telefone_contato) < 15  and  not telefone_contato.isalpha()):#Verifico se o contato é entre 8 e 15
-                        print("Passou no teste do contato")
                         break
 
                     else:
@@ -104,7 +97,6 @@ if nome == True:
 
                 email_contato = input("E-mail:")
                 if("@" in email_contato and ".com" in email_contato):## Vejo se @ e .com estão no texto que o usuário digitouelse:
-                    print("Passou")
                     break
 
                 else:
