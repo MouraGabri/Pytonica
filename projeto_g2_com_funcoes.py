@@ -124,6 +124,18 @@ def lista_contatos_cadastrados():
     for i in lista_contatos:
         print(i)
 
+def salvar_csv():
+    import pandas as pd
+
+
+    df = pd.DataFrame({
+        "Nome": nome_contato,
+        "Telefone": telefone,
+        "E-Mail": email_contato
+    },index=[0])
+
+    df.to_excel("Faculdade_G2.xlsx", header=True, index=False, engine='openpyxl')
+
 def main():
    boas_vindas()
    validacao_nome()
@@ -131,6 +143,5 @@ def main():
    cadastrar_nome()
    cadastrar_telefone()
    cadastrar_email()
-   lista_contatos_cadastrados()
-
+   salvar_csv()
 main()   
