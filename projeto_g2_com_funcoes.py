@@ -8,20 +8,20 @@ def boas_vindas():
     print("|                                                                                  |")
     print("|----------------------------------------------------------------------------------|")
 
-qtd_min_caracteres_nome = int(3)# Qtd de caracteres para o nome
+qtd_min_caracteres = int(3)## qtd minima de caracteres para o nome
 tentativas_nome = 1
 nome = False
 
-def validacao_nome_usuario():
-    global tentativas_nome
+def validacao_nome():
     global nome
+    global tentativas_nome
     global nome_usuario
 
     print("Para seguir na plataforma, informe o seu nome.")
     while True:
         nome_usuario = input("Nome:").strip()
         print("-----------------------------------------")
-        if len(nome_usuario)> qtd_min_caracteres_nome and nome_usuario.replace(" ", "").isalpha(): ##isalpha(verifica se todos os caracteres são letras)
+        if len(nome_usuario)> qtd_min_caracteres and nome_usuario.replace(" ", "").isalpha(): ##isalpha(verifica se todos os caracteres são letras)
             nome = True
             time.sleep(0.70)
             break
@@ -34,9 +34,9 @@ def validacao_nome_usuario():
 tentativas_opcoes = 0
 cadastrar_contatos = False
 
-def opcoes_menu():
-    global tentativas_opcoes
+def menu_opcoes():
     global cadastrar_contatos
+    global tentativas_opcoes
     if nome == True:
         while tentativas_opcoes < 3:
             print(f"Olá {nome_usuario}, selecione uma das opcoes:")
@@ -65,6 +65,72 @@ def opcoes_menu():
                 print(f"-------- Tentativa {tentativas_opcoes} de 3----------")
 
 
-boas_vindas()
-validacao_nome_usuario()
-opcoes_menu()
+def cadastrar_nome():
+    tentativas_contato = 0
+    global nome_contato
+    while tentativas_contato < 3:
+        nome_contato = input("Nome:").strip()
+
+        if len(nome_contato)> qtd_min_caracteres and nome_contato.replace(" ", "").isalpha(): ##isalpha(verifica se todos os caracteres são letras)
+            print("Passou na validação do nome")
+            break
+        else:
+            tentativas_contato += 1   
+            print(f"Informe apenas caracteres do tipo texto --- Tentativa {tentativas_contato} de 3") 
+
+        if   tentativas_contato == 3:
+            print("QTD de vezes atigingida")
+            exit()  
+
+
+def cadastrar_telefone():
+    telefone_tentativa = 0
+    global telefone
+    while telefone_tentativa < 3:# while interno para contar o número de tentativas
+        telefone = input("Telefone:").strip()## Cada interação ele pede um novo telefone
+
+        if(len(telefone) > 8 and len(telefone) < 15  and  not telefone.isalpha()):#Verifico se o contato é entre 8 e 15
+            print("Passou na validação do nome")
+            break # Se passou ele vai para o próximo campo
+
+        else:
+            telefone_tentativa += 1
+            print(f"Informe apenas caracteres do tipo inteiro --- Tentativa {telefone_tentativa} de 3") 
+                        
+        if telefone_tentativa == 3:
+            print("QTD de vezes atigingida")
+            exit()
+
+def cadastrar_email():
+    tentativa_email = 0
+    global email_contato
+    while tentativa_email < 3:
+        email_contato = input("E-mail:")
+        if("@" in email_contato and ".com" in email_contato):## Vejo se @ e .com estão no texto que o usuário digitou
+            print("Passou na validação do email")
+            break 
+
+        else:            
+            tentativa_email += 1
+            print(f"E-mail Inválido | Tentativa {tentativa_email} de 3 ")   
+
+        if tentativa_email == 3:
+            print("QTD de vezes atigingida")
+            exit()
+        
+def lista_contatos_cadastrados():
+    lista_contatos = []
+    lista_contatos.append(f'{nome_contato} | {telefone} | {email_contato}')
+    for i in lista_contatos:
+        print(i)
+
+def main():
+   boas_vindas()
+   validacao_nome()
+   menu_opcoes()
+   cadastrar_nome()
+   cadastrar_telefone()
+   cadastrar_email()
+   lista_contatos_cadastrados()
+
+main()   
